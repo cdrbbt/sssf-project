@@ -4,9 +4,17 @@
  * Module dependencies.
  */
 
+require('dotenv').config();
 const app = require('../app');
 const debug = require('debug')('back:server');
 const http = require('http');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.DB_ADRESS).then(() => {
+  console.log('success');
+}, (err) => {
+  console.log(err);
+});
 
 /**
  * Get port from environment and store in Express.

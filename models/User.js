@@ -9,3 +9,6 @@ const userSchema = new Schema ({
   hash: String,
   id: Number
 })
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;
