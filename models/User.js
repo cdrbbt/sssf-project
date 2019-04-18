@@ -3,11 +3,9 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema ({
   name: String,
-  wins: Number,
-  losses: Number,
-  email: String,
-  hash: String,
-  id: Number
+  wins: {type: Number, default: 0},
+  losses: {type: Number, default: 0},
+  hash: String
 })
 
 const User = mongoose.model('User', userSchema);
