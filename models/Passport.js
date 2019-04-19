@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local');
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 module.exports = (passport) => {
@@ -9,11 +10,13 @@ module.exports = (passport) => {
           console.log('user not found');
           return done(null, false, { msg: 'Invalid username' });
         }
-        if (user.hash === password) {
-          return done(null, user);
-        }
-        console.log('wrong pass');
-        return done(null, false, { msg: 'Invalid password' });
+        bcrypt.compare(password, user.hash, (err, same) => {
+          if (same) {
+            return done(null, user);
+          }
+          console.log('wrong pass');
+          return done(null, false, { msg: 'Invalid password' });
+        });
       });
     }
   ));

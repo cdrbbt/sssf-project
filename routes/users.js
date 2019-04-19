@@ -13,7 +13,7 @@ router.get('/login', usersController.loginUserPage);
 
 router.post('/login', usersController.loginUser);
 
-router.get('/register', usersController.registerUserPage)
+router.get('/register', usersController.registerUserPage);
 
 router.post('/register', usersController.registerUser);
 

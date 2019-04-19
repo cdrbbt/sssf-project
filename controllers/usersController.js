@@ -1,6 +1,8 @@
-const User = require('../models/User');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
+
+const saltRound = Number(process.env.SALT_ROUND);
 
 exports.loginUserPage = (req, res) => {
   res.render('login', { title: 'Login' });
@@ -25,15 +27,18 @@ exports.registerUser = (req, res) => {
     .then((user) => {
       if (user) {
         // username taken
-        res.send('name taken');
+        res.send({ msg: 'name taken' });
       } else {
-        const newUser = new User({
-          name: username,
-          hash: password,
-        });
-        console.log(newUser);
-        newUser.save().then((user) => {
-          res.send('saved to db');
+        console.log(typeof saltRound);
+        bcrypt.hash(password, saltRound, (err, encrypt) => {
+          const newUser = new User({
+            name: username,
+            hash: encrypt,
+          });
+          console.log(newUser);
+          newUser.save().then(() => {
+            res.send('saved to db');
+          });
         });
       }
     });
