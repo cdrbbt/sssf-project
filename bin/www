@@ -5,10 +5,11 @@
  */
 
 require('dotenv').config();
-const app = require('../app');
 const debug = require('debug')('back:server');
 const http = require('http');
 const mongoose = require('mongoose');
+const app = require('../app');
+const io = require('../socket');
 
 mongoose.connect(process.env.DB_ADRESS).then(() => {
   console.log('success');
@@ -28,6 +29,8 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+io.listen(server);
+
 
 /**
  * Listen on provided port, on all network interfaces.

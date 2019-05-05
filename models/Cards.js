@@ -8,6 +8,10 @@ const createDeck = () => {
   return deck;
 };
 
+const deck = createDeck();
+
+module.exports.deck = deck;
+
 // Sorts a hand to prepare for point finding
 const sortHand = (hand) => {
   return hand.sort((a, b) => {
@@ -108,3 +112,21 @@ const checkPair = (hand) => {
 };
 
 const checkHighCard = hand => ({ found: true, value: hand[0].value });
+
+const checkFunctions = [];
+checkFunctions.push(checkStraighFlush, checkFourOfKind, checkFullHouse, checkFlush, checkStraight,
+  checkThreeOfKind, checkTwoPair, checkPair, checkHighCard);
+
+const checkHand = (hand) => {
+  let handCopy = [...hand];
+  let result;
+  handCopy = sortHand(handCopy);
+
+  for (let i = 0; i < checkFunctions.length; i++) {
+    result = checkFunctions[i](handCopy);
+    if (result.found) i = checkFunctions.length;
+  }
+  return result;
+};
+
+module.exports.checkHand = checkHand;

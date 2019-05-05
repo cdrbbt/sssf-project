@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 Vaguely poker
+  p Welcome to the game
+  h2 Players
+  ul#players
+  h2 Your hand
+  #hand
+  h2 Community cards
+  #community
+  #actions
+    button#join Join
+    button#start Start
+    button#check Check
+    button#raise Raise
+    button#fold Fold
+  p#points
+  p#pot
+  script(src="/socket.io/socket.io.js")
+  script const socket = io();
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+  script(src="/javascripts/game.js")

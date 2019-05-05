@@ -12,6 +12,7 @@ module.exports = (passport) => {
         }
         bcrypt.compare(password, user.hash, (err, same) => {
           if (same) {
+            console.log('log in')
             return done(null, user);
           }
           console.log('wrong pass');
@@ -22,11 +23,12 @@ module.exports = (passport) => {
   ));
 
   passport.serializeUser((user, done) => {
+    console.log(user.id);
     done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
-    User.findById(id, (err, res) => {
+    User.findById(id, (err, user) => {
       done(err, user);
     });
   });
